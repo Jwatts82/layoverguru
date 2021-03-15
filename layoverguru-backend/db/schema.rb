@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 2021_03_15_030304) do
   create_table "activities", force: :cascade do |t|
     t.string "name"
     t.string "description"
+    t.integer "airport_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
