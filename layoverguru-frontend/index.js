@@ -1,8 +1,38 @@
 const BASE_URL = 'http://localhost:3000'
 
 window.addEventListener("DOMContentLoaded",() => {
+    document.getElementById('airport-form').addEventListener('click', displayCreateForm)
+    document.getElementById('airports').addEventListener('click', getAirports)
     getAirports()
 })
+
+function displayCreateForm() {
+    let formDiv = document.querySelector("#new-airport-form")
+    let html = `
+    <form>
+        <label>Name:</label>
+        <input type="text" id='name'>
+        <label>Code:</label>
+        <input type="text" id='code'>
+        <label>Visited:</label>
+        <input type="checkbox" id='visited'>
+        <input type="submit">
+    </form>
+    `
+    formDiv.innerHTML = html
+    document.querySelector('form').addEventListener('submit', createAirport)
+}
+
+function clearForm(){
+    let formDiv = document.querySelector("#new-airport-form")
+    formDiv.innerHTML = ""
+}
+
+function createAirport(e){
+    e.preventDefault()
+
+    console.log(e)
+}
 
 function getAirports() {
     let main = document.getElementById('main')
