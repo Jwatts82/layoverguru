@@ -1,1 +1,1 @@
-initail start to Layover Guru app
+initail start to vanilla JS Layover Guru app
