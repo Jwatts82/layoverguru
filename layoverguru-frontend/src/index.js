@@ -1,10 +1,32 @@
-const BASE_URL = 'http://localhost:3000'
+// const BASE_URL = 'http://localhost:3000'
 
-window.addEventListener("DOMContentLoaded", () => {
+// window.addEventListener("DOMContentLoaded", () => {
+//     document.getElementById('airport-form').addEventListener('click', displayCreateForm)
+//     document.getElementById('airports').addEventListener('click', getAirports)
+//     getAirports()
+// })
+
+const apiService = new ApiService()
+let main = document.getElementById('main')
+
+const init = () => {
+    bindEventListeners()
+    renderAirports()
+}
+
+function bindEventListeners() {
     document.getElementById('airport-form').addEventListener('click', displayCreateForm)
-    document.getElementById('airports').addEventListener('click', getAirports)
-    getAirports()
-})
+    document.getElementById('airports').addEventListener('click', renderAirports)
+}
+
+async function renderAirports() {
+    const airports = await apiService.fetchAirports()
+    main.innerHTML = ""
+    airports.map(airport => {
+        const newAirport = new Airport(airport)
+        main.innerHTML += newAirport.render()
+    })
+}
 
 function displayCreateForm() {
         let formDiv = document.querySelector("#new-airport-form")
@@ -61,24 +83,6 @@ function createAirport(e) {
     )
 }
 
-function getAirports() {
-    let main = document.getElementById('main')
-    main.innerHTML = ""
-    fetch(BASE_URL + '/airports')
-    .then(res => res.json())
-    .then( airports => { 
-        airports.map(airport => {
-        main.innerHTML += `
-        <li>
-            <a href="#" data-id="${airport.id}">${airport.name}</a>
-            - ${airport.visited ? "Visited" : "Not Visited"}
-        </li>
-        `
-        })
-    attachClicksToLinks()
-    })
-}
-
 function attachClicksToLinks() {
     const airports = document.querySelectorAll('li a')
     airports.forEach(airport => {
@@ -122,3 +126,4 @@ function removeAirport(e) {
 }
 
 
+init()
